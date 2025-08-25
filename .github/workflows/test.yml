@@ -33,8 +33,6 @@ jobs:
     needs: detect-changes
     if: needs.detect-changes.outputs.has-changes == 'true'
     timeout-minutes: 5
-    outputs:
-      merge_ok: ${{ steps.ok.outputs.merge_ok }}
 
     steps:
       - name: Setup Python
@@ -47,11 +45,6 @@ jobs:
         timeout-minutes: 1
         run: echo "Test ran successfully."
 
-      - name: Set Merge Ok
-        id: ok
-        timeout-minutes: 1
-        run: echo "merge_ok=true" >> "$GITHUB_OUTPUT"
-
 
 # -------------------------------------------------
   no-test-needed:
@@ -59,8 +52,6 @@ jobs:
     needs: detect-changes
     if: needs.detect-changes.outputs.has-changes == 'false'
     timeout-minutes: 5
-    outputs:
-      merge_ok: ${{ steps.ok.outputs.merge_ok }}
 
     steps:
       - name: Setup Python
@@ -73,17 +64,11 @@ jobs:
         timeout-minutes: 1
         run: echo "No relevant changes found. No test needed. Proceeding with success."
 
-      - name: Set Merge Ok
-        id: ok
-        timeout-minutes: 1
-        run: echo "merge_ok=true" >> "$GITHUB_OUTPUT"
-
 
 # -------------------------------------------------
   merge-ok:
     runs-on: ubuntu-latest
     needs: [ test, no-test-needed ]
-    if: needs.test.outputs.merge_ok == 'true' || needs.no-test-needed.outputs.merge_ok == 'true'
     timeout-minutes: 5
 
     steps:
