@@ -40,6 +40,9 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: "3.x"
+
+      - name: Run Test
+        timeout-minutes: 1
         run: echo "Test ran successfully."
 
 
@@ -56,6 +59,9 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: "3.x"
+
+      - name: No Test Needed
+        timeout-minutes: 1
         run: echo "No relevant changes found. No test needed. Proceeding with success."
 
 
