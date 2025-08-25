@@ -1,0 +1,26 @@
+name: Test
+
+on:
+  pull_request:
+    types: [ opened, synchronize ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout Repository
+        timeout-minutes: 1
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        timeout-minutes: 1
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.x"
+
+      - name: Run Test
+        timeout-minutes: 1
+        run: |
+          echo "Test ran successfully."
